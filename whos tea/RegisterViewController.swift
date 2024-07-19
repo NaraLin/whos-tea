@@ -49,6 +49,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         field.layer.borderColor = UIColor.white.cgColor
         field.layer.borderWidth = 4
         field.layer.cornerRadius = 10
+        field.returnKeyType = .done
         field.textColor = .white
         field.leftViewMode = .always
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))
@@ -75,6 +76,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         field.textColor = .white
         field.leftViewMode = .always
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))
+        field.numberpadReturn()
         return field
     }()
     
@@ -94,6 +96,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         field.layer.borderColor = UIColor.white.cgColor
         field.layer.borderWidth = 4
         field.keyboardType = .emailAddress
+        field.autocapitalizationType = .none
+        field.returnKeyType = .done
         field.layer.cornerRadius = 10
         field.textColor = .white
         field.leftViewMode = .always
@@ -118,6 +122,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         field.keyboardType = .default
         field.isSecureTextEntry = true
         field.textContentType = .oneTimeCode
+        field.returnKeyType = .done
         field.layer.cornerRadius = 10
         field.textColor = .white
         field.leftViewMode = .always
@@ -324,42 +329,93 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        
+        
         DatabaseManager.share.userExistsWithEmail(with: email) { [weak self] exist in
-            
+        
             guard let strongSelf = self else {
                 return
             }
             
-            guard !exist else {
+            print(exist)
+            
+            guard exist == false else{
                 //用戶已存在
                 strongSelf.alertMessage(message: "用戶已存在")
                 return
             }
-            
-            //用戶不存在，建立帳號
-            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { result, error in
-                
-                guard result != nil, error == nil else {
-                    if let errorDescription = error?.localizedDescription {
-                        print("帳號申請失敗:\(errorDescription)")
-                    }
-                    return
-                }
-                
-                //建立帳號連接database
-                DatabaseManager.share.insertUser(with: User(name: name, phoneNumber: phone, emailAddress: email, password: password))
-                
-                
-                strongSelf.dismiss(animated: true)
 
                 
+                //用戶不存在，建立帳號
+                FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { result, error in
+                    
+                    guard result != nil, error == nil else {
+                        if let errorDescription = error?.localizedDescription {
+                            print("帳號申請失敗:\(errorDescription)")
+                        }
+                        return
+                    }
+                    
+                    FirebaseAuth.Auth.auth().currentUser?.sendEmailVerification(completion: { error in
+                        if let error {
+                            print(error)
+                        }
+                        else {
+                            print("email send")
+                        }
+                    
+                    })
+                    
+                    guard let currentUser = FirebaseAuth.Auth.auth().currentUser else {
+                        return
+                    }
+                    
+                    let uid = currentUser.uid
+                    
+                    
+                    //建立帳號連接database
+                    DatabaseManager.share.insertUser(with: User(name: name, phoneNumber: phone, emailAddress: email, password: password, uid: uid))
+                    
+                    //認證信發出通知
+                    strongSelf.registerSuccessMessage()
+                        
+                    //檢查認證，確認Mail有效性
+                    if currentUser.isEmailVerified {
+                        
+                        //登入成功，關掉登入畫面
+                        strongSelf.dismiss(animated: true)
+                        
+                        //收鍵盤
+                        strongSelf.nameTextField.resignFirstResponder()
+                        strongSelf.phoneTextField.resignFirstResponder()
+                        strongSelf.mailTextField.resignFirstResponder()
+                        strongSelf.passwordTextField.resignFirstResponder()
+                    }
+                    
+                    else {
+                        
+                        let alert = UIAlertController(title: "電子郵件未認證", message: "請至信箱收取認證信認證", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        strongSelf.present(alert, animated: true)
+                        
+                    }
+                    
+                    
+                }
             }
         }
         
       
         
-        
+    func registerSuccessMessage() {
+        let alert = UIAlertController(title: "認證信已發出，請認證後重新登入", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            
+        }))
+                        
+        present(alert, animated: true)
     }
+    
     
     func alertMessage(message: String){
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)

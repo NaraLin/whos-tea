@@ -7,20 +7,50 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		490F63E02C2A73F100520D0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */; };
+		490F63E22C2A971A00520D0F /* GoogleServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */; };
+		490F63E42C2E83A300520D0F /* NumberpadReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63E32C2E83A200520D0F /* NumberpadReturn.swift */; };
+		490F63E62C2EC23000520D0F /* Drinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63E52C2EC23000520D0F /* Drinks.swift */; };
+		490F63E82C2F3AC700520D0F /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63E72C2F3AC600520D0F /* MenuTableViewCell.swift */; };
+		490F63F72C32590200520D0F /* FetchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63F62C32590200520D0F /* FetchDataManager.swift */; };
+		490F63F92C3308D700520D0F /* DrinkOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63F82C3308D700520D0F /* DrinkOrderViewController.swift */; };
+		490F63FB2C33AFB800520D0F /* OrderDrinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63FA2C33AFB800520D0F /* OrderDrinkTableViewCell.swift */; };
+		490F63FD2C33F81700520D0F /* IceSugarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63FC2C33F81700520D0F /* IceSugarTableViewCell.swift */; };
+		490F64032C36557800520D0F /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F64022C36557800520D0F /* CartViewController.swift */; };
+		490F64052C368C0800520D0F /* Orders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F64042C368C0800520D0F /* Orders.swift */; };
+		490F64072C37B32F00520D0F /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F64062C37B32E00520D0F /* CartTableViewCell.swift */; };
 		497064D42C231E340051B7A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064D32C231E340051B7A7 /* AppDelegate.swift */; };
 		497064D62C231E340051B7A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064D52C231E340051B7A7 /* SceneDelegate.swift */; };
 		497064D82C231E340051B7A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064D72C231E340051B7A7 /* LoginViewController.swift */; };
 		497064DB2C231E340051B7A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 497064D92C231E340051B7A7 /* Main.storyboard */; };
 		497064DD2C231E390051B7A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 497064DC2C231E390051B7A7 /* Assets.xcassets */; };
 		497064E02C231E390051B7A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 497064DE2C231E390051B7A7 /* LaunchScreen.storyboard */; };
-		497064E82C231FB90051B7A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497064E72C231FB90051B7A7 /* GoogleService-Info.plist */; };
 		497064EA2C23C81C0051B7A7 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064E92C23C81C0051B7A7 /* DatabaseManager.swift */; };
 		497064ED2C23CF830051B7A7 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064EC2C23CF830051B7A7 /* MenuViewController.swift */; };
 		497064EF2C23FB8B0051B7A7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */; };
+		497064F12C26A9460051B7A7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064F02C26A9450051B7A7 /* ProfileViewController.swift */; };
+		497064F32C26CE140051B7A7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064F22C26CE140051B7A7 /* MainTabBarController.swift */; };
+		49F2B6CA2C476E570028BD88 /* 内海フォント-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49F2B6C82C476E550028BD88 /* 内海フォント-Bold.ttf */; };
+		49F2B6CB2C476E570028BD88 /* 内海フォント-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49F2B6C92C476E570028BD88 /* 内海フォント-ExtraLight.ttf */; };
+		49F2B6CD2C4772FE0028BD88 /* 圆体夏蝉丸ゴシック.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49F2B6CC2C4772FE0028BD88 /* 圆体夏蝉丸ゴシック.ttf */; };
+		49F2B6D12C4A5ED10028BD88 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F2B6D02C4A5ED10028BD88 /* APIKey.swift */; };
+		49F2B6D32C4A5F6D0028BD88 /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49F2B6D22C4A5F6D0028BD88 /* APIKey.plist */; };
 		89FF896EA18CE7E9CBA41271 /* Pods_whos_tea.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1ECB11B5215C89FCBBB6CF /* Pods_whos_tea.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Resource/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServiceManager.swift; sourceTree = "<group>"; };
+		490F63E32C2E83A200520D0F /* NumberpadReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberpadReturn.swift; sourceTree = "<group>"; };
+		490F63E52C2EC23000520D0F /* Drinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drinks.swift; sourceTree = "<group>"; };
+		490F63E72C2F3AC600520D0F /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		490F63F62C32590200520D0F /* FetchDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDataManager.swift; sourceTree = "<group>"; };
+		490F63F82C3308D700520D0F /* DrinkOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkOrderViewController.swift; sourceTree = "<group>"; };
+		490F63FA2C33AFB800520D0F /* OrderDrinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDrinkTableViewCell.swift; sourceTree = "<group>"; };
+		490F63FC2C33F81700520D0F /* IceSugarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceSugarTableViewCell.swift; sourceTree = "<group>"; };
+		490F64022C36557800520D0F /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		490F64042C368C0800520D0F /* Orders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orders.swift; sourceTree = "<group>"; };
+		490F64062C37B32E00520D0F /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
 		497064D02C231E340051B7A7 /* whos tea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "whos tea.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		497064D32C231E340051B7A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		497064D52C231E340051B7A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,10 +59,16 @@
 		497064DC2C231E390051B7A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		497064DF2C231E390051B7A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		497064E12C231E390051B7A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		497064E72C231FB90051B7A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		497064E92C23C81C0051B7A7 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		497064EC2C23CF830051B7A7 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		497064F02C26A9450051B7A7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		497064F22C26CE140051B7A7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		49F2B6C82C476E550028BD88 /* 内海フォント-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "内海フォント-Bold.ttf"; sourceTree = "<group>"; };
+		49F2B6C92C476E570028BD88 /* 内海フォント-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "内海フォント-ExtraLight.ttf"; sourceTree = "<group>"; };
+		49F2B6CC2C4772FE0028BD88 /* 圆体夏蝉丸ゴシック.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "圆体夏蝉丸ゴシック.ttf"; sourceTree = "<group>"; };
+		49F2B6D02C4A5ED10028BD88 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		49F2B6D22C4A5F6D0028BD88 /* APIKey.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
 		5F42DFD7D2635CB24CD618FE /* Pods-whos tea.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whos tea.debug.xcconfig"; path = "Target Support Files/Pods-whos tea/Pods-whos tea.debug.xcconfig"; sourceTree = "<group>"; };
 		7E1ECB11B5215C89FCBBB6CF /* Pods_whos_tea.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_whos_tea.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD0E3B5779813E041EA6981 /* Pods-whos tea.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-whos tea.release.xcconfig"; path = "Target Support Files/Pods-whos tea/Pods-whos tea.release.xcconfig"; sourceTree = "<group>"; };
@@ -61,6 +97,7 @@
 		497064C72C231E340051B7A7 = {
 			isa = PBXGroup;
 			children = (
+				49F2B6CE2C4A5D550028BD88 /* APIKey */,
 				497064D22C231E340051B7A7 /* whos tea */,
 				497064D12C231E340051B7A7 /* Products */,
 				8DEB8F7B490C17CC42A90865 /* Pods */,
@@ -79,11 +116,23 @@
 		497064D22C231E340051B7A7 /* whos tea */ = {
 			isa = PBXGroup;
 			children = (
+				49F2B6C72C476E160028BD88 /* Font */,
+				490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */,
 				497064EB2C23C8390051B7A7 /* Resource */,
-				497064E72C231FB90051B7A7 /* GoogleService-Info.plist */,
 				497064EC2C23CF830051B7A7 /* MenuViewController.swift */,
+				490F63F82C3308D700520D0F /* DrinkOrderViewController.swift */,
+				490F64022C36557800520D0F /* CartViewController.swift */,
 				497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */,
 				497064D72C231E340051B7A7 /* LoginViewController.swift */,
+				497064F02C26A9450051B7A7 /* ProfileViewController.swift */,
+				497064F22C26CE140051B7A7 /* MainTabBarController.swift */,
+				490F63E72C2F3AC600520D0F /* MenuTableViewCell.swift */,
+				490F63FC2C33F81700520D0F /* IceSugarTableViewCell.swift */,
+				490F63FA2C33AFB800520D0F /* OrderDrinkTableViewCell.swift */,
+				490F64062C37B32E00520D0F /* CartTableViewCell.swift */,
+				490F63E52C2EC23000520D0F /* Drinks.swift */,
+				490F64042C368C0800520D0F /* Orders.swift */,
+				490F63E32C2E83A200520D0F /* NumberpadReturn.swift */,
 				497064D92C231E340051B7A7 /* Main.storyboard */,
 				497064DC2C231E390051B7A7 /* Assets.xcassets */,
 				497064DE2C231E390051B7A7 /* LaunchScreen.storyboard */,
@@ -97,9 +146,30 @@
 			children = (
 				497064D32C231E340051B7A7 /* AppDelegate.swift */,
 				497064D52C231E340051B7A7 /* SceneDelegate.swift */,
+				490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */,
 				497064E92C23C81C0051B7A7 /* DatabaseManager.swift */,
+				490F63F62C32590200520D0F /* FetchDataManager.swift */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		49F2B6C72C476E160028BD88 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				49F2B6C82C476E550028BD88 /* 内海フォント-Bold.ttf */,
+				49F2B6C92C476E570028BD88 /* 内海フォント-ExtraLight.ttf */,
+				49F2B6CC2C4772FE0028BD88 /* 圆体夏蝉丸ゴシック.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		49F2B6CE2C4A5D550028BD88 /* APIKey */ = {
+			isa = PBXGroup;
+			children = (
+				49F2B6D22C4A5F6D0028BD88 /* APIKey.plist */,
+				49F2B6D02C4A5ED10028BD88 /* APIKey.swift */,
+			);
+			path = APIKey;
 			sourceTree = "<group>";
 		};
 		8DEB8F7B490C17CC42A90865 /* Pods */ = {
@@ -119,6 +189,7 @@
 			buildConfigurationList = 497064E42C231E390051B7A7 /* Build configuration list for PBXNativeTarget "whos tea" */;
 			buildPhases = (
 				AA2E72D9755382B5E8D61C65 /* [CP] Check Pods Manifest.lock */,
+				49F2B6CF2C4A5DEB0028BD88 /* ShellScript */,
 				497064CC2C231E340051B7A7 /* Sources */,
 				497064CD2C231E340051B7A7 /* Frameworks */,
 				497064CE2C231E340051B7A7 /* Resources */,
@@ -172,7 +243,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				497064E02C231E390051B7A7 /* LaunchScreen.storyboard in Resources */,
-				497064E82C231FB90051B7A7 /* GoogleService-Info.plist in Resources */,
+				49F2B6D32C4A5F6D0028BD88 /* APIKey.plist in Resources */,
+				490F63E02C2A73F100520D0F /* GoogleService-Info.plist in Resources */,
+				49F2B6CA2C476E570028BD88 /* 内海フォント-Bold.ttf in Resources */,
+				49F2B6CB2C476E570028BD88 /* 内海フォント-ExtraLight.ttf in Resources */,
+				49F2B6CD2C4772FE0028BD88 /* 圆体夏蝉丸ゴシック.ttf in Resources */,
 				497064DD2C231E390051B7A7 /* Assets.xcassets in Resources */,
 				497064DB2C231E340051B7A7 /* Main.storyboard in Resources */,
 			);
@@ -181,6 +256,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		49F2B6CF2C4A5DEB0028BD88 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/APIKey/APIKey.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "CONFIG_FILE_BASE_NAME=\"APIKey\"\n\nCONFIG_FILE_NAME=${CONFIG_FILE_BASE_NAME}.plist\nSAMPLE_CONFIG_FILE_NAME=${CONFIG_FILE_BASE_NAME}-Sample.plist\n\nCONFIG_FILE_PATH=$SRCROOT/APIKey/$CONFIG_FILE_NAME\nSAMPLE_CONFIG_FILE_PATH=$SRCROOT/APIKey/$SAMPLE_CONFIG_FILE_NAME\n\nif [ -f \"$CONFIG_FILE_PATH\" ]; then\n  echo \"$CONFIG_FILE_PATH exists.\"\nelse\n  echo \"$CONFIG_FILE_PATH does not exist, copying sample\"\n  cp -v \"${SAMPLE_CONFIG_FILE_PATH}\" \"${CONFIG_FILE_PATH}\"\nfi\n";
+		};
 		5B5D48B7F0E585EC0D9E3808 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,11 +320,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				490F63FB2C33AFB800520D0F /* OrderDrinkTableViewCell.swift in Sources */,
 				497064EA2C23C81C0051B7A7 /* DatabaseManager.swift in Sources */,
 				497064ED2C23CF830051B7A7 /* MenuViewController.swift in Sources */,
+				490F63E82C2F3AC700520D0F /* MenuTableViewCell.swift in Sources */,
+				490F63E42C2E83A300520D0F /* NumberpadReturn.swift in Sources */,
+				490F63E62C2EC23000520D0F /* Drinks.swift in Sources */,
+				490F64052C368C0800520D0F /* Orders.swift in Sources */,
+				490F63E22C2A971A00520D0F /* GoogleServiceManager.swift in Sources */,
+				497064F32C26CE140051B7A7 /* MainTabBarController.swift in Sources */,
 				497064D82C231E340051B7A7 /* LoginViewController.swift in Sources */,
+				490F63F92C3308D700520D0F /* DrinkOrderViewController.swift in Sources */,
 				497064EF2C23FB8B0051B7A7 /* RegisterViewController.swift in Sources */,
+				497064F12C26A9460051B7A7 /* ProfileViewController.swift in Sources */,
+				490F64072C37B32F00520D0F /* CartTableViewCell.swift in Sources */,
+				49F2B6D12C4A5ED10028BD88 /* APIKey.swift in Sources */,
+				490F63FD2C33F81700520D0F /* IceSugarTableViewCell.swift in Sources */,
+				490F64032C36557800520D0F /* CartViewController.swift in Sources */,
 				497064D42C231E340051B7A7 /* AppDelegate.swift in Sources */,
+				490F63F72C32590200520D0F /* FetchDataManager.swift in Sources */,
 				497064D62C231E340051B7A7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

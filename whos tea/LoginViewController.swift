@@ -7,8 +7,13 @@
 
 import UIKit
 import FirebaseAuth
+import GoogleSignIn
+import FirebaseCore
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
+    
+    var user: User!
+    
     
     private let scrollView:UIScrollView = {
         let scrollView = UIScrollView()
@@ -40,6 +45,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailField.layer.borderColor = UIColor.black.cgColor
         emailField.backgroundColor = .white
         emailField.layer.cornerRadius = 10
+        emailField.returnKeyType = .done
         emailField.translatesAutoresizingMaskIntoConstraints = false
         //首字不自動大寫
         emailField.autocapitalizationType = .none
@@ -57,6 +63,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.isSecureTextEntry = true
         passwordField.backgroundColor = .white
         passwordField.layer.cornerRadius = 10
+        passwordField.returnKeyType = .done
         passwordField.autocapitalizationType = .none
         passwordField.leftViewMode = .always
         passwordField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))
@@ -95,14 +102,35 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.setTitle("登出", for: .normal)
         return button
     }()
+ 
     
+//    private let googleSignInButton:UIButton = {
+//        let button = UIButton()
+//        button.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+//        button.setTitleColor(.white, for: .normal)
+//        button.setTitle("使用google登入", for: .normal)
+//        button.layer.cornerRadius = 10
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+    
+    private let googleSignInButton:GIDSignInButton = {
+        let button = GIDSignInButton()
+        button.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 2
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(named: "mainColor")
         
-        
+    
+      
         //subviews
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -112,6 +140,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         contentView.addSubview(passwordField)
         contentView.addSubview(button)
         contentView.addSubview(createAccountButton)
+        contentView.addSubview(googleSignInButton)
         
         //delegate
         emailField.delegate = self
@@ -119,7 +148,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         //按空白處收鍵盤
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
+        contentView.addGestureRecognizer(tapGesture)
         
         //登入確認
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
@@ -128,21 +158,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //跳到註冊頁面
         createAccountButton.addTarget(self, action: #selector(didTapCreateAccount), for: .touchUpInside)
         
+    
         
-        //如果已登入(使用者存在)
-        if FirebaseAuth.Auth.auth().currentUser != nil {
-            label.isHidden = true
-            emailField.isHidden = true
-            passwordField.isHidden = true
-            button.isHidden = true
-            
-            view.addSubview(signOutButton)
-            signOutButton.frame = CGRect(x: 20, y: 150, width: view.frame.size.width - 40, height: 52)
-            
-            signOutButton.addTarget(self, action: #selector(logOutTap), for: .touchUpInside)
-        }
+        //Google signin
         
-
+        googleSignInButton.addTarget(self, action: #selector(didTapLogInWithGoogle), for: .touchUpInside)
+        
+        
+        
         
         //設定autolayout
         let contentViewHeightAnchor = contentView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor)
@@ -189,11 +212,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             createAccountButton.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
             createAccountButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             createAccountButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            createAccountButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
-            createAccountButton.heightAnchor.constraint(equalToConstant: 20)
+            createAccountButton.heightAnchor.constraint(equalToConstant: 20),
             
+            googleSignInButton.topAnchor.constraint(equalTo: createAccountButton.bottomAnchor, constant: 20),
+            googleSignInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            googleSignInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            googleSignInButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20),
+            googleSignInButton.heightAnchor.constraint(equalToConstant: 60)
             
         ])
+        
+       
+        
         
         
     }
@@ -214,6 +244,43 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    
+    
+    @objc func didTapLogInWithGoogle(){
+        
+        GoogleSignInManager.shared.signInWithGoogle(presentingViewController: self) { [weak self] Result in
+            
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            switch Result {
+                    
+                    //Google登入成功
+                case .success(let user):
+                    print("\(user)")
+                    strongSelf.dismiss(animated: true)
+                    
+                    //Google登入失敗
+                case .failure(let error):
+                    print("\(error)")
+                    
+                    switch error {
+                            
+                        case .unknownError(let message):
+                            strongSelf.alertNotice(title: "QQ", message: "Unkown Error : \(message)")
+                            
+                            
+                        case .signInFail(let message):
+                            strongSelf.alertNotice(title: "QQ", message: "SignIn Error : \(message)")
+                            
+                    }
+                    
+            }
+        }
+    }
+    
     @objc func keyboardWillShow(notification: NSNotification){
         
         guard let keyboardSize =
@@ -233,7 +300,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     @objc func hideKeyboard(){
-        view.endEditing(true)
+            view.endEditing(true)       
+    }
+    
+    //需辨識GoogleSignInButton tap & 收鍵盤tap，讓收鍵盤tap只有在contentView上有作用
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view == gestureRecognizer.view
     }
     
     //跳轉註冊畫面
@@ -245,26 +317,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    @objc func logOutTap(){
-        do{
-            try FirebaseAuth.Auth.auth().signOut()
-            label.isHidden = false
-            emailField.isHidden = false
-            passwordField.isHidden = false
-            button.isHidden = false
-            
-            signOutButton.removeFromSuperview()
-        }
-        catch{
-          print("登出有問題")
-        }
-    }
-    
     
     
     @objc func didTapButton(){
         guard let email = emailField.text, !email.isEmpty,
               let password = passwordField.text, !password.isEmpty else {
+            alertNotice(title: "ＱＱ", message: "請輸入email & password")
             print("請輸入email & password")
             return
         }
@@ -284,27 +342,52 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             
+            
+            
             //登入失敗跳alert，申請新帳號
             guard error == nil else {
-                strongSelf.showCreateAccount(email: email, password: password)
+                strongSelf.showCreateAccount()
                 return
             }
             
-            //登入成功，關掉登入畫面
-            strongSelf.dismiss(animated: true)
             
-            //收鍵盤
-            strongSelf.emailField.resignFirstResponder()
-            strongSelf.passwordField.resignFirstResponder()
-            
+            if let currentUser = FirebaseAuth.Auth.auth().currentUser {
+                
+                //檢查認證，確認Mail有效性
+                if currentUser.isEmailVerified {
+                    
+                    //登入成功，關掉登入畫面
+                    strongSelf.dismiss(animated: true)
+                    
+                    //收鍵盤
+                    strongSelf.emailField.resignFirstResponder()
+                    strongSelf.passwordField.resignFirstResponder()
+                    
+                }
+                
+                else {
+                    strongSelf.alertNotice(title: "電子郵件未認證", message: "請至信箱收取認證信認證")
+                }
+            }
         }
+        
+    }
+    
+    func alertNotice(title: String, message: String){
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
         
         
     }
     
     
-    func showCreateAccount(email: String, password: String){
+    
+    func showCreateAccount(){
+        
         let alert = UIAlertController(title: "帳號不存在", message: "是否要申請帳號？", preferredStyle: .alert)
+        
         alert.addAction(UIAlertAction(title: "continue", style: .default, handler: {[weak self] _ in
             
             guard let strongSelf = self else { return }
@@ -321,6 +404,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { _ in
             
         }))
+        
         
         present(alert, animated: true)
         

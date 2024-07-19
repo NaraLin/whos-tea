@@ -5,11 +5,15 @@ target 'whos tea' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for whos tea
+  # Firebase
 
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'Firebase/Firestore'
+
+ # Google sign in
+
+pod 'GoogleSignIn'
 
 end

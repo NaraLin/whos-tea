@@ -8,34 +8,38 @@
 import Foundation
 import FirebaseDatabase
 
+
 //使用final:不會被其他類別繼承，property & function不能被覆寫
 final class DatabaseManager{
     
     static let share = DatabaseManager()
     
     private let database = Database.database().reference()
-    
-
 }
 
 //Account Management
 extension DatabaseManager {
     
-    public func userExistsWithEmail(with email: String, 
+    
+    
+    //驗證是否user已存在
+    public func userExistsWithEmail(with email: String,
                                     completion: @escaping ((Bool) -> Void)) {
         //(child:) Must be not contain '.' '#' '$' '[' or ']'
-        var safeEmail = email.replacingOccurrences(of: ".", with: "-")
-       // safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
-        
-        //snapShot.value 得到數據，型別為any，需轉換型別使用
+        let safeEmail = email.replacingOccurrences(of: ".", with: "-")
+
+        //of: .value:當路徑下的任何資料發生變化時觸發
         database.child(safeEmail).observeSingleEvent(of: .value) { snapShot in
-            guard let foundEmail = snapShot.value as? String else {
+            
+            let value = snapShot.value as? NSDictionary
+            
+            guard value != nil else {
                 completion(false)
                 return
             }
+            //用戶已存在，執行true completion
             completion(true)
         }
-        
     }
     
     
@@ -45,22 +49,24 @@ extension DatabaseManager {
         database.child(user.safeEmail).setValue([
             "name": user.name,
             "phoneNumber": user.phoneNumber,
-            "password": user.password
+            "password": user.password,
+            "uid": user.uid
         ])
     }
 }
 
 
-struct User {
+struct User: Codable {
     
     let name: String
     let phoneNumber: String
     let emailAddress: String
     let password: String
+    let uid: String
     
     var safeEmail: String {
-        var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
-      //  safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+        let safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
+      
         return safeEmail
     }
     
