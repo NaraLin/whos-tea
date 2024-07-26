@@ -39,7 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Resource/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServiceManager.swift; sourceTree = "<group>"; };
 		490F63E32C2E83A200520D0F /* NumberpadReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberpadReturn.swift; sourceTree = "<group>"; };
 		490F63E52C2EC23000520D0F /* Drinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drinks.swift; sourceTree = "<group>"; };
@@ -116,9 +116,24 @@
 		497064D22C231E340051B7A7 /* whos tea */ = {
 			isa = PBXGroup;
 			children = (
-				49F2B6C72C476E160028BD88 /* Font */,
+				49D053692C533E2400E1F5F5 /* View */,
+				49D053682C533E1A00E1F5F5 /* Model */,
+				49D053672C533E0D00E1F5F5 /* Controller */,
 				490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */,
-				497064EB2C23C8390051B7A7 /* Resource */,
+				49F2B6C72C476E160028BD88 /* Font */,
+				497064E12C231E390051B7A7 /* Info.plist */,
+			);
+			path = "whos tea";
+			sourceTree = "<group>";
+		};
+		49D053672C533E0D00E1F5F5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */,
+				497064D32C231E340051B7A7 /* AppDelegate.swift */,
+				497064D52C231E340051B7A7 /* SceneDelegate.swift */,
+				497064E92C23C81C0051B7A7 /* DatabaseManager.swift */,
+				490F63F62C32590200520D0F /* FetchDataManager.swift */,
 				497064EC2C23CF830051B7A7 /* MenuViewController.swift */,
 				490F63F82C3308D700520D0F /* DrinkOrderViewController.swift */,
 				490F64022C36557800520D0F /* CartViewController.swift */,
@@ -126,31 +141,32 @@
 				497064D72C231E340051B7A7 /* LoginViewController.swift */,
 				497064F02C26A9450051B7A7 /* ProfileViewController.swift */,
 				497064F22C26CE140051B7A7 /* MainTabBarController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		49D053682C533E1A00E1F5F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				490F63E52C2EC23000520D0F /* Drinks.swift */,
+				490F64042C368C0800520D0F /* Orders.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		49D053692C533E2400E1F5F5 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				490F63E72C2F3AC600520D0F /* MenuTableViewCell.swift */,
 				490F63FC2C33F81700520D0F /* IceSugarTableViewCell.swift */,
 				490F63FA2C33AFB800520D0F /* OrderDrinkTableViewCell.swift */,
 				490F64062C37B32E00520D0F /* CartTableViewCell.swift */,
-				490F63E52C2EC23000520D0F /* Drinks.swift */,
-				490F64042C368C0800520D0F /* Orders.swift */,
 				490F63E32C2E83A200520D0F /* NumberpadReturn.swift */,
 				497064D92C231E340051B7A7 /* Main.storyboard */,
 				497064DC2C231E390051B7A7 /* Assets.xcassets */,
 				497064DE2C231E390051B7A7 /* LaunchScreen.storyboard */,
-				497064E12C231E390051B7A7 /* Info.plist */,
 			);
-			path = "whos tea";
-			sourceTree = "<group>";
-		};
-		497064EB2C23C8390051B7A7 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				497064D32C231E340051B7A7 /* AppDelegate.swift */,
-				497064D52C231E340051B7A7 /* SceneDelegate.swift */,
-				490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */,
-				497064E92C23C81C0051B7A7 /* DatabaseManager.swift */,
-				490F63F62C32590200520D0F /* FetchDataManager.swift */,
-			);
-			path = Resource;
+			path = View;
 			sourceTree = "<group>";
 		};
 		49F2B6C72C476E160028BD88 /* Font */ = {
