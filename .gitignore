@@ -1,2 +1,11 @@
 APIKey/APIKey.plist
 GoogleService-Info.plist
+
+# CocoaPods
+Pods/
+
+# macOS
+.DS_Store
+
+# Xcode
+build/
