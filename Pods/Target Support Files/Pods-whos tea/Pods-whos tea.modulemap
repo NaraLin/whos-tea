@@ -1,6 +1,0 @@
-framework module Pods_whos_tea {
-  umbrella header "Pods-whos tea-umbrella.h"
-
-  export *
-  module * { export * }
-}
