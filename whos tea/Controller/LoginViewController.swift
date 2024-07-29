@@ -13,7 +13,7 @@ import FirebaseCore
 class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     var user: User!
-    
+    private let viewModel = LoginViewModel()
     
     private let scrollView:UIScrollView = {
         let scrollView = UIScrollView()
@@ -128,9 +128,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(named: "mainColor")
-        
-    
-      
+
         //subviews
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -151,8 +149,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         tapGesture.delegate = self
         contentView.addGestureRecognizer(tapGesture)
         
-        //登入確認
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        //Email登入
+        button.addTarget(self, action: #selector(didTapLoginWithEmailButton), for: .touchUpInside)
         
         
         //跳到註冊頁面
@@ -160,8 +158,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         
     
         
-        //Google signin
-        
+        //Google帳號登入
         googleSignInButton.addTarget(self, action: #selector(didTapLogInWithGoogle), for: .touchUpInside)
         
         
@@ -248,38 +245,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
     
     @objc func didTapLogInWithGoogle(){
         
-        GoogleSignInManager.shared.signInWithGoogle(presentingViewController: self) { [weak self] Result in
+        viewModel.signInWithGoogle(presentingViewController: self) { [weak self] result in
             
-            
-            guard let strongSelf = self else {
-                return
-            }
-            
-            switch Result {
-                    
-                    //Google登入成功
+            guard let strongSelf = self else { return }
+            switch result {
                 case .success(let user):
                     print("\(user)")
-                    strongSelf.dismiss(animated: true)
-                    
-                    //Google登入失敗
-                case .failure(let error):
-                    print("\(error)")
-                    
-                    switch error {
-                            
-                        case .unknownError(let message):
-                            strongSelf.alertNotice(title: "QQ", message: "Unkown Error : \(message)")
-                            
-                            
-                        case .signInFail(let message):
-                            strongSelf.alertNotice(title: "QQ", message: "SignIn Error : \(message)")
-                            
-                    }
-                    
+                    let tc = MainTabBarController()
+                    strongSelf.view.window?.rootViewController = tc
+                case .failure(let errorMessage):
+                    print("Google SignIn Error : \(errorMessage)")
+                    strongSelf.alertNotice(title: "QQ", message: "Google帳號登入失敗： \(errorMessage)")
             }
         }
+        
     }
+    
     
     @objc func keyboardWillShow(notification: NSNotification){
         
@@ -316,58 +297,41 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         
     }
     
+
     
-    
-    
-    @objc func didTapButton(){
+    @objc func didTapLoginWithEmailButton(){
+        
         guard let email = emailField.text, !email.isEmpty,
               let password = passwordField.text, !password.isEmpty else {
             alertNotice(title: "ＱＱ", message: "請輸入email & password")
-            print("請輸入email & password")
             return
         }
         
-        //Get auth instance
-        //attempt sign in
-        //if failure, present alert to creat account
-        //if user continues, create account
         
-        //check sign in on app launch
-        //allow user to sign out with button
-        
-        
-        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
+        viewModel.signInWithEmail(email: email, password: password) { [weak self] result in
+           
+            guard let strongSelf = self else { return }
             
-            guard let strongSelf = self else {
-                return
-            }
-            
-            
-            
-            //登入失敗跳alert，申請新帳號
-            guard error == nil else {
-                strongSelf.showCreateAccount()
-                return
-            }
-            
-            
-            if let currentUser = FirebaseAuth.Auth.auth().currentUser {
+            switch result {
+                case .success:
+                    print("test")
+                    let tc = MainTabBarController()
+                    strongSelf.view.window?.rootViewController = tc
+                    strongSelf.view.endEditing(true)
                 
-                //檢查認證，確認Mail有效性
-                if currentUser.isEmailVerified {
+                case .failure(let error):
+                    switch error {
+                        case .signInFail(let message):
+                            if message == "電子郵件未認證" {
+                                strongSelf.alertNotice(title: "電子郵件未認證", message: "請至信箱收取認證信")
+                            }else {
+                                //無帳號，建立帳號alert
+                                strongSelf.showCreateAccount()
+                            }
+                        default:
+                            strongSelf.showCreateAccount()
+                    }
                     
-                    //登入成功，關掉登入畫面
-                    strongSelf.dismiss(animated: true)
-                    
-                    //收鍵盤
-                    strongSelf.emailField.resignFirstResponder()
-                    strongSelf.passwordField.resignFirstResponder()
-                    
-                }
-                
-                else {
-                    strongSelf.alertNotice(title: "電子郵件未認證", message: "請至信箱收取認證信認證")
-                }
             }
         }
         
@@ -398,8 +362,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
             //收鍵盤
             strongSelf.emailField.resignFirstResponder()
             strongSelf.passwordField.resignFirstResponder()
-        }
-                                     ))
+        }))
         
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: { _ in
             

@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum fetchDataError: Error {
+enum FetchDataError: Error {
     
     case urlError(String)
     case sessionError(String)
@@ -21,7 +21,7 @@ class FetchDataManager {
     
     static let shared = FetchDataManager()
     
-    func fetchData(completion: @escaping (Result<Menu,fetchDataError>) -> Void) {
+    func fetchData(completion: @escaping (Result<Menu,FetchDataError>) -> Void) {
         
         guard let url = URL(string: "https://api.airtable.com/v0/appvC935PME75LZRT/menu") else {
             //url error

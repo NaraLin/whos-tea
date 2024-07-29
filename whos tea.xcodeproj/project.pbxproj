@@ -30,6 +30,11 @@
 		497064EF2C23FB8B0051B7A7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */; };
 		497064F12C26A9460051B7A7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064F02C26A9450051B7A7 /* ProfileViewController.swift */; };
 		497064F32C26CE140051B7A7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064F22C26CE140051B7A7 /* MainTabBarController.swift */; };
+		49D0536C2C538C6B00E1F5F5 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */; };
+		49D0536E2C53D27A00E1F5F5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */; };
+		49D053702C53D6D500E1F5F5 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536F2C53D6D500E1F5F5 /* Error.swift */; };
+		49D053722C54DAE600E1F5F5 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D053712C54DAE600E1F5F5 /* RegisterViewModel.swift */; };
+		49D053752C54F39C00E1F5F5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D053742C54F39C00E1F5F5 /* AuthManager.swift */; };
 		49F2B6CA2C476E570028BD88 /* 内海フォント-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49F2B6C82C476E550028BD88 /* 内海フォント-Bold.ttf */; };
 		49F2B6CB2C476E570028BD88 /* 内海フォント-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49F2B6C92C476E570028BD88 /* 内海フォント-ExtraLight.ttf */; };
 		49F2B6CD2C4772FE0028BD88 /* 圆体夏蝉丸ゴシック.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49F2B6CC2C4772FE0028BD88 /* 圆体夏蝉丸ゴシック.ttf */; };
@@ -64,6 +69,11 @@
 		497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		497064F02C26A9450051B7A7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		497064F22C26CE140051B7A7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		49D0536F2C53D6D500E1F5F5 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		49D053712C54DAE600E1F5F5 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		49D053742C54F39C00E1F5F5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		49F2B6C82C476E550028BD88 /* 内海フォント-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "内海フォント-Bold.ttf"; sourceTree = "<group>"; };
 		49F2B6C92C476E570028BD88 /* 内海フォント-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "内海フォント-ExtraLight.ttf"; sourceTree = "<group>"; };
 		49F2B6CC2C4772FE0028BD88 /* 圆体夏蝉丸ゴシック.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "圆体夏蝉丸ゴシック.ttf"; sourceTree = "<group>"; };
@@ -116,6 +126,8 @@
 		497064D22C231E340051B7A7 /* whos tea */ = {
 			isa = PBXGroup;
 			children = (
+				49D053732C54F37F00E1F5F5 /* Service */,
+				49D0536A2C538C2900E1F5F5 /* ViewModel */,
 				49D053692C533E2400E1F5F5 /* View */,
 				49D053682C533E1A00E1F5F5 /* Model */,
 				49D053672C533E0D00E1F5F5 /* Controller */,
@@ -129,16 +141,15 @@
 		49D053672C533E0D00E1F5F5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */,
+				497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */,
+				497064D72C231E340051B7A7 /* LoginViewController.swift */,
+				497064EC2C23CF830051B7A7 /* MenuViewController.swift */,
 				497064D32C231E340051B7A7 /* AppDelegate.swift */,
 				497064D52C231E340051B7A7 /* SceneDelegate.swift */,
 				497064E92C23C81C0051B7A7 /* DatabaseManager.swift */,
 				490F63F62C32590200520D0F /* FetchDataManager.swift */,
-				497064EC2C23CF830051B7A7 /* MenuViewController.swift */,
 				490F63F82C3308D700520D0F /* DrinkOrderViewController.swift */,
 				490F64022C36557800520D0F /* CartViewController.swift */,
-				497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */,
-				497064D72C231E340051B7A7 /* LoginViewController.swift */,
 				497064F02C26A9450051B7A7 /* ProfileViewController.swift */,
 				497064F22C26CE140051B7A7 /* MainTabBarController.swift */,
 			);
@@ -150,6 +161,8 @@
 			children = (
 				490F63E52C2EC23000520D0F /* Drinks.swift */,
 				490F64042C368C0800520D0F /* Orders.swift */,
+				49D0536F2C53D6D500E1F5F5 /* Error.swift */,
+				490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,6 +180,24 @@
 				497064DE2C231E390051B7A7 /* LaunchScreen.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		49D0536A2C538C2900E1F5F5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */,
+				49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */,
+				49D053712C54DAE600E1F5F5 /* RegisterViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		49D053732C54F37F00E1F5F5 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				49D053742C54F39C00E1F5F5 /* AuthManager.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		49F2B6C72C476E160028BD88 /* Font */ = {
@@ -338,6 +369,8 @@
 			files = (
 				490F63FB2C33AFB800520D0F /* OrderDrinkTableViewCell.swift in Sources */,
 				497064EA2C23C81C0051B7A7 /* DatabaseManager.swift in Sources */,
+				49D053702C53D6D500E1F5F5 /* Error.swift in Sources */,
+				49D0536E2C53D27A00E1F5F5 /* LoginViewModel.swift in Sources */,
 				497064ED2C23CF830051B7A7 /* MenuViewController.swift in Sources */,
 				490F63E82C2F3AC700520D0F /* MenuTableViewCell.swift in Sources */,
 				490F63E42C2E83A300520D0F /* NumberpadReturn.swift in Sources */,
@@ -351,11 +384,14 @@
 				497064F12C26A9460051B7A7 /* ProfileViewController.swift in Sources */,
 				490F64072C37B32F00520D0F /* CartTableViewCell.swift in Sources */,
 				49F2B6D12C4A5ED10028BD88 /* APIKey.swift in Sources */,
+				49D0536C2C538C6B00E1F5F5 /* MenuViewModel.swift in Sources */,
 				490F63FD2C33F81700520D0F /* IceSugarTableViewCell.swift in Sources */,
+				49D053722C54DAE600E1F5F5 /* RegisterViewModel.swift in Sources */,
 				490F64032C36557800520D0F /* CartViewController.swift in Sources */,
 				497064D42C231E340051B7A7 /* AppDelegate.swift in Sources */,
 				490F63F72C32590200520D0F /* FetchDataManager.swift in Sources */,
 				497064D62C231E340051B7A7 /* SceneDelegate.swift in Sources */,
+				49D053752C54F39C00E1F5F5 /* AuthManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

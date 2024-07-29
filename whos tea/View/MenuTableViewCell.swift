@@ -42,7 +42,7 @@ class MenuTableViewCell: UITableViewCell {
     }()
     
     var drink: Records?
-    
+        
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -67,7 +67,7 @@ class MenuTableViewCell: UITableViewCell {
             drinkImageView.heightAnchor.constraint(equalTo: drinkImageView.widthAnchor)
         ])
         
-       // drinkImageView.layer.cornerRadius = 20
+       
     }
     
     required init?(coder: NSCoder) {
@@ -79,6 +79,9 @@ class MenuTableViewCell: UITableViewCell {
         super.layoutSubviews()
         drinkImageView.layer.cornerRadius = drinkImageView.frame.width * 0.2
     }
+    
+
+    
 }
 
 

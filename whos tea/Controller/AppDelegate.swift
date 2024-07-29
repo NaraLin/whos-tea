@@ -12,6 +12,7 @@ import GoogleSignIn
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    var window:UIWindow?
     
     //處理從其他應用程式打開你的應用程式時傳遞過來的 URL
     //process: 收到一個 URL，可以從 URL 物件中解析出需要的資訊，並根據這些資訊來決定如何處理這個請求
@@ -24,6 +25,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        AuthManager.shared.checkAuthStatus { [weak self] isAuth in
+            
+            guard let strongSelf = self else { return }
+            
+            if isAuth {
+                //已登入
+                let tabBarController = MainTabBarController()
+                strongSelf.window?.rootViewController = UINavigationController(rootViewController: tabBarController)
+            } else {
+                //未登入or未認證
+                let vc = LoginViewController()
+                strongSelf.window?.rootViewController = UINavigationController(rootViewController: vc)
+            }
+            strongSelf.window?.makeKeyAndVisible()
+        }
         
         return true
     }

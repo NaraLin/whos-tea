@@ -16,8 +16,6 @@ class GoogleSignInManager {
     static let shared = GoogleSignInManager()
     func signInWithGoogle(presentingViewController: UIViewController, completion: @escaping (Result<User, FirebaseError>  ) -> Void){
         
-        
-        
         //google sign in setting
         //clientID: Firebase 提供的唯一識別碼，用於識別你的APP
         guard let clientID = FirebaseApp.app()?.options.clientID else {
@@ -70,8 +68,6 @@ class GoogleSignInManager {
                 //登入成功後，可以使用user取得使用者基本資料(from google)
                 let name = user.profile?.name ?? ""
                 let email = user.profile?.email ?? ""
-                
-               
                 let uid = result.user.uid
                 
                 let firebaseUser = User(name: name, phoneNumber: "google account", emailAddress: email, password: "google account", uid: uid)
@@ -89,9 +85,9 @@ class GoogleSignInManager {
 
              
                        
-enum FirebaseError: Error{
-    case unknownError(String)
-    case signInFail(String)
-}
+//enum FirebaseError: Error{
+//    case unknownError(String)
+//    case signInFail(String)
+//}
 
 

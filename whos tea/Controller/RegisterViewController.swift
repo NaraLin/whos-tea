@@ -10,6 +10,9 @@ import FirebaseAuth
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
 
+    
+    private let viewModel = RegisterViewModel()
+    
     private let scrollView:UIScrollView = {
        let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -312,114 +315,52 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @objc func didTapRegister(){
         
-        nameTextField.resignFirstResponder()
-        phoneTextField.resignFirstResponder()
-        mailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
+        view.endEditing(true)
         
-        guard let name = nameTextField.text, !name.isEmpty,
-              let phone = phoneTextField.text, !phone.isEmpty,
-              let password = passwordTextField.text, !password.isEmpty,
-              let email = mailTextField.text, !email.isEmpty else {
+        if let name = nameTextField.text,
+           let phone = phoneTextField.text,
+           let password = passwordTextField.text,
+           let mail = mailTextField.text {
             
-            print("註冊資訊不完整")
-            //待加alert
-            alertMessage(message: "請輸入完整資訊")
+            viewModel.name = name
+            viewModel.mail = mail
+            viewModel.phone = phone
+            viewModel.password = password
             
-            return
-        }
-        
-        
-        
-        DatabaseManager.share.userExistsWithEmail(with: email) { [weak self] exist in
-        
-            guard let strongSelf = self else {
-                return
-            }
-            
-            print(exist)
-            
-            guard exist == false else{
-                //用戶已存在
-                strongSelf.alertMessage(message: "用戶已存在")
-                return
-            }
-
+            viewModel.register { [weak self] result in
                 
-                //用戶不存在，建立帳號
-                FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { result, error in
-                    
-                    guard result != nil, error == nil else {
-                        if let errorDescription = error?.localizedDescription {
-                            print("帳號申請失敗:\(errorDescription)")
+                guard let strongSelf = self else { return }
+                
+                switch result {
+                    case .success(let message):
+                        if message == "帳號申請成功" {
+                            strongSelf.showAlert(title: "\(message)", message: "請至信箱收取認證信，並於認證後重新登入") {
+                                let vc = LoginViewController()
+                                strongSelf.present(vc, animated: true)
+                            }
+                        } else {
+                            let tc = MainTabBarController()
+                            strongSelf.view.window?.rootViewController = tc
                         }
-                        return
-                    }
-                    
-                    FirebaseAuth.Auth.auth().currentUser?.sendEmailVerification(completion: { error in
-                        if let error {
-                            print(error)
-                        }
-                        else {
-                            print("email send")
-                        }
-                    
-                    })
-                    
-                    guard let currentUser = FirebaseAuth.Auth.auth().currentUser else {
-                        return
-                    }
-                    
-                    let uid = currentUser.uid
-                    
-                    
-                    //建立帳號連接database
-                    DatabaseManager.share.insertUser(with: User(name: name, phoneNumber: phone, emailAddress: email, password: password, uid: uid))
-                    
-                    //認證信發出通知
-                    strongSelf.registerSuccessMessage()
                         
-                    //檢查認證，確認Mail有效性
-                    if currentUser.isEmailVerified {
-                        
-                        //登入成功，關掉登入畫面
-                        strongSelf.dismiss(animated: true)
-                        
-                        //收鍵盤
-                        strongSelf.nameTextField.resignFirstResponder()
-                        strongSelf.phoneTextField.resignFirstResponder()
-                        strongSelf.mailTextField.resignFirstResponder()
-                        strongSelf.passwordTextField.resignFirstResponder()
-                    }
-                    
-                    else {
-                        
-                        let alert = UIAlertController(title: "電子郵件未認證", message: "請至信箱收取認證信認證", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default))
-                        strongSelf.present(alert, animated: true)
-                        
-                    }
-                    
-                    
+                    case .failure(let error):
+                        strongSelf.showAlert(title: "Error!!!Q_Q", message: error.message)
+                      
                 }
             }
+            
         }
         
-      
-        
-    func registerSuccessMessage() {
-        let alert = UIAlertController(title: "認證信已發出，請認證後重新登入", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            
-        }))
-                        
-        present(alert, animated: true)
     }
     
     
-    func alertMessage(message: String){
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok", style: .default))
+    
+    
+    func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            completion?()
+        }))
         present(alert, animated: true)
    
     }
