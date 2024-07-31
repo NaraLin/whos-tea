@@ -13,16 +13,19 @@ import FirebaseAuth
 
 class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var selectQty: Int = 1
-    var drinks: Records!
-    var image: UIImage?
     
-    //[section:selected row]
-    var selectOption: [Int : Int] = [:]
-    let footerView = UIView()
-    var cartInfo:[OrderRecords]?
-    var uploadOrder: Orders?
-    var currentUser: String?
+    private let viewModel: DrinkOrderViewModel
+    
+    init(viewModel: DrinkOrderViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -50,6 +53,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         
         
     }
+    
     
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -80,8 +84,8 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        selectOption[indexPath.section] = indexPath.row
+        viewModel.updateSelectOption(section: indexPath.section, row: indexPath.row)
+        //viewModel.selectOption[indexPath.section] = indexPath.row
         
         //更新指定的section
         tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
@@ -89,6 +93,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let iceSugarCell = tableView.dequeueReusableCell(withIdentifier: "iceAndSugarCell", for: indexPath) as! IceSugarTableViewCell
         
         let drinkCell = tableView.dequeueReusableCell(withIdentifier: "drinkCell", for: indexPath) as! OrderDrinkTableViewCell
@@ -96,32 +101,33 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         
         tableView.separatorStyle = .none
         
-        iceSugarCell.radioButton.isSelected = selectOption[indexPath.section] == indexPath.row
+        iceSugarCell.radioButton.isSelected = viewModel.isOptionSelected(section: indexPath.section, row: indexPath.row)
+        //iceSugarCell.radioButton.isSelected = viewModel.selectOption[indexPath.section] == indexPath.row
         
         switch indexPath.section {
             case 0:
-                drinkCell.drinkLabel.text = drinks.fields.name
-                drinkCell.drinkImageView.image = image
+                drinkCell.drinkLabel.text = viewModel.drinks.fields.name
+                drinkCell.drinkImageView.image = viewModel.image
                 drinkCell.isUserInteractionEnabled = false
                 
                 return drinkCell
-            
+                
             case 1:
                 iceSugarCell.iceSugarLabel.text = iceChoice.allCases[indexPath.row].rawValue
-               return iceSugarCell
+                return iceSugarCell
                 
             case 2:
                 iceSugarCell.iceSugarLabel.text = sugarChoice.allCases[indexPath.row].rawValue
                 return iceSugarCell
                 
-        
+                
             default:
                 return iceSugarCell
         }
         
     }
     
-
+    
     private var tableView: UITableView = {
         let tableview = UITableView()
         tableview.translatesAutoresizingMaskIntoConstraints = false
@@ -187,10 +193,10 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         return label
     }()
     
+    //使用lazy來宣告變數，表示該變數的初始化會延遲到第一次被存取時才執行。這樣可以節省記憶體和提高效能，特別是在初始化過程中需要進行一些計算或需要存取其他物件的情況下使用
     private lazy var selectPriceLabel: UILabel = {
         let label = UILabel()
-        let price = drinks.fields.largeSizePrice
-        label.text = price
+        label.text = viewModel.drinks.fields.largeSizePrice
         label.font = UIFont(name: "GillSans-SemiBold", size: 24)
         label.textColor = .yellow
         
@@ -206,7 +212,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         return label
     }()
     
-    private var selectQTYLabel: UILabel = {
+   private var selectQTYLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
         label.font = UIFont(name: "GillSans-SemiBold", size: 24)
@@ -229,7 +235,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
     
     private var addToCartButton: UIButton = {
         let button = UIButton()
-       // button.setTitle("加到購物車", for: .normal)
+        // button.setTitle("加到購物車", for: .normal)
         let normalAttributedString: [NSAttributedString.Key : Any] = [.font : UIFont(name: "NatsuzemiMaruGothic-Black", size: 20)!, .foregroundColor : UIColor.white]
         button.setAttributedTitle(NSAttributedString(string: "加到購物車", attributes: normalAttributedString), for: .normal)
         return button
@@ -248,6 +254,29 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         tableView.dataSource = self
         tableView.delegate = self
         
+        //setup UI
+        setupUI()
+        
+        
+        //取得用戶名
+        viewModel.getCurrentUser()
+        
+        //addTarget
+        QTYStepper.addTarget(self, action: #selector(stepperValueChange), for: .valueChanged)
+        addToCartButton.addTarget(self, action: #selector(addToCart), for: .touchUpInside)
+        
+        setupBinding()
+        viewModel.updatePrice()
+    }
+    
+    
+    private func setupUI(){
+        
+        let footerView = UIView()
+        footerView.addSubview(cartStackView)
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.backgroundColor = UIColor(named: "mainColor")
+        
         //subview
         view.addSubview(tableView)
         view.addSubview(footerView)
@@ -265,13 +294,9 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         cartStackView.addArrangedSubview(cartLeftStackView)
         cartStackView.addArrangedSubview(addToCartButton)
         
-        footerView.addSubview(cartStackView)
-        footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.backgroundColor = UIColor(named: "mainColor")
-        
-        
         
         NSLayoutConstraint.activate([
+            
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -281,7 +306,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
             footerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-           
+            
             cartStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
             cartStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
             cartStackView.centerYAnchor.constraint(equalTo: footerView.centerYAnchor)
@@ -289,134 +314,70 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
             
         ])
         
-        //取得用戶名
-        getCurrentUser()
-        
-        //addTarget
-        QTYStepper.addTarget(self, action: #selector(stepperValueChange), for: .valueChanged)
-        addToCartButton.addTarget(self, action: #selector(addToCart), for: .touchUpInside)
-        
-        
     }
+    
+    private func setupBinding() {
+        
+        //定義viewModel closure
+        viewModel.onQtyUpdated = { [weak self] qty in
+            self?.selectQTYLabel.text = "\(qty)"
+        }
+        
+        viewModel.onPriceUpdated = { [weak self] price in
+            self?.selectPriceLabel.text = "\(price)"
+        }
+    }
+    
     
     @objc func stepperValueChange(sender: UIStepper) {
-        
-        let value = Int(sender.value)
-        selectQTYLabel.text = "\(value)"
-        let drinkPrice = Int(drinks.fields.largeSizePrice!)!
-        let drinkPriceTotal = drinkPrice * value
-        selectPriceLabel.text = "\(drinkPriceTotal)"
-
+        viewModel.updateQty(value: Int(sender.value))
     }
     
     
-    func getCurrentUser(){
-        
-        if let currentUser = FirebaseAuth.Auth.auth().currentUser {
-            if let usrEmail = currentUser.email {
-                let safeEmail = usrEmail.replacingOccurrences(of: ".", with: "-")
-                FirebaseDatabase.Database.database().reference().child(safeEmail).observeSingleEvent(of: .value) { snapshot  in
-                    
-                    let value = snapshot.value as? NSDictionary
-                    let username = value?["name"] as? String ?? "unknownuser"
-                    self.currentUser = username
-                    print(username)
-                    
-                }
-            }
-        }
-    }
     
     @objc func addToCart() {
-
-        if selectOption[1] != nil &&
-            selectOption[2] != nil {
-            
-            addToCartButton.isSelected = true
-            
-            let addCartDrink = drinks.fields.name
-            let iceSelected = iceChoice.allCases[selectOption[1]!].rawValue
-            let sugarSelected = sugarChoice.allCases[selectOption[2]!].rawValue
-            let qtySelected = Int(QTYStepper.value)
-            let priceTotal = qtySelected * Int(drinks.fields.largeSizePrice!)!
-            getCurrentUser()
-            if let currentUser {
-                self.uploadOrder = Orders(records: [OrderRecords(fields: OrderFields(name: currentUser, drink: addCartDrink, sugar: sugarSelected, ice: iceSelected, price: priceTotal, qty: qtySelected))])
-                print(self.uploadOrder!)
-                self.uploadCartOrder()
-                
-            }
- 
-        } else {
-            let alert = UIAlertController(title: "請選擇甜度冰塊", message: "", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alert, animated: true)
-            addToCartButton.isSelected = false
-        }
         
+        viewModel.addToCart { result in
+            DispatchQueue.main.async {
+                switch result {
+                    case .success:
+                        self.viewModel.uploadCartOrder { result in
+                            DispatchQueue.main.async {
+                                switch result {
+                                    case .success:
+                                        self.showAlert(title: "已成功加入購物車", message: "")
+                                    case .failure(let error):
+                                        self.showAlert(title: "Error", message: error.localizedDescription)
+                                }
+                            }
+                        }
+                    case .failure(let error):
+                        self.showAlert(title: "\(error.message)", message: "")
+                }
+            }
+            
+        }
     }
     
-    func uploadCartOrder(){
-        
-        if let url = URL(string: "https://api.airtable.com/v0/appvC935PME75LZRT/order") {
-            var urlRequest = URLRequest(url: url)
-            urlRequest.httpMethod = "POST"
-            urlRequest.setValue("Bearer \(APIKey.default)", forHTTPHeaderField: "Authorization")
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let uploadData = try? JSONEncoder().encode(uploadOrder)
-            urlRequest.httpBody = uploadData
-            
-            URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-                
-                if let error {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                if let httpResponse = response as? HTTPURLResponse {
-                    if !(200...299).contains(httpResponse.statusCode) {
-                        print(httpResponse.statusCode)
-                        print("httpresponse error")
-                        return
-                    }
-                    
-                }
-                
-                if let data {
-                    
-                    let decoder = JSONDecoder()
-                    if let createDataResponse = try? decoder.decode(OrderResponse.self, from: data) {
-                        print(createDataResponse)
-                        
-                        DispatchQueue.main.async {
-                            let alert = UIAlertController(title: "已成功加入購物車", message: "", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .default))
-                            self.present(alert, animated: true)
-        
-                        }
-                        
-                    }
-                    
-                }
-            }.resume()
-                
-                
-            }
-            
-        }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
+    
+    
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+    
+}
 

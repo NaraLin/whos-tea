@@ -62,14 +62,7 @@ class MenuViewController: UIViewController {
                     }
                     
                 case .failure(let error):
-                    switch error{
-                        case .decodeError(let errorMessage):
-                            print("Decode Error:\(errorMessage)")
-                        case .sessionError(let errorMessage):
-                            print("Session Error:\(errorMessage)")
-                        case .urlError(let errorMessage):
-                            print("URL Error:\(errorMessage)")
-                    }
+                    print(error.localizedDescription)
                    
                     
             }
@@ -187,12 +180,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let vc = DrinkOrderViewController()
-        vc.drinks = viewModel.filterDrinks[indexPath.row]
+        let drink = viewModel.filterDrinks[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath) as! MenuTableViewCell
-        vc.image = cell.drinkImageView.image
-        
-        
+        let image = cell.drinkImageView.image
+        let vm = DrinkOrderViewModel(drinks: drink, image: image)
+        let vc = DrinkOrderViewController(viewModel: vm)
         present(vc, animated: true)
     }
     

@@ -34,7 +34,18 @@ enum RegisterError: Error{
         }
         
     }
+}
+
+enum AddToCartError: Error {
+    case iceOrSugarNoChoose(String)
+    case noCurrentUser(String)
     
-    
-    
+    var message: String{
+        switch self {
+            case .iceOrSugarNoChoose:
+                return "請選擇甜度冰塊"
+            case .noCurrentUser:
+                return "無法取得用戶資訊"
+        }
+    }
 }

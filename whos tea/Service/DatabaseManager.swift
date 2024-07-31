@@ -20,8 +20,6 @@ final class DatabaseManager{
 //Account Management
 extension DatabaseManager {
     
-    
-    
     //驗證是否user已存在
     public func userExistsWithEmail(with email: String,
                                     completion: @escaping ((Bool) -> Void)) {
@@ -44,7 +42,7 @@ extension DatabaseManager {
     
     
     //insert new user to database
-    public func insertUser(with user: User){
+    public func insertUser(with user: User) {
         //insert databae: child(JSON)
         database.child(user.safeEmail).setValue([
             "name": user.name,
@@ -55,20 +53,4 @@ extension DatabaseManager {
     }
 }
 
-
-struct User: Codable {
-    
-    let name: String
-    let phoneNumber: String
-    let emailAddress: String
-    let password: String
-    let uid: String
-    
-    var safeEmail: String {
-        let safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
-      
-        return safeEmail
-    }
-    
-}
 

@@ -14,6 +14,7 @@ import UIKit
 class GoogleSignInManager {
     
     static let shared = GoogleSignInManager()
+    
     func signInWithGoogle(presentingViewController: UIViewController, completion: @escaping (Result<User, FirebaseError>  ) -> Void){
         
         //google sign in setting
@@ -84,10 +85,6 @@ class GoogleSignInManager {
 }
 
              
-                       
-//enum FirebaseError: Error{
-//    case unknownError(String)
-//    case signInFail(String)
-//}
+                    
 
 

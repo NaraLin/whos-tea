@@ -21,9 +21,9 @@ class MenuViewModel {
     let imageCache = NSCache<NSURL, UIImage>()
     
     
-    func fetchData(completion: @escaping (Result<Void, FetchDataError>) -> Void){
+    func fetchData(completion: @escaping (Result<Void, Error>) -> Void){
         
-        FetchDataManager.shared.fetchData { [weak self] result in
+        FetchDataManager.shared.fetchData(url: GetUrl.menu) { [weak self] result in
             
             guard let strongSelf = self else {
                 return
@@ -31,11 +31,16 @@ class MenuViewModel {
             
             switch result {
                 case .success(let data):
-                    strongSelf.drinks = data.records
+                    
+                    let decoder = JSONDecoder()
+                    guard let drinkData = try? decoder.decode(Menu.self, from: data) else {
+                        return
+                    }
+                    strongSelf.drinks = drinkData.records
                     
                     //.map : $0 = records 第一個array，由裡面的特定值組成一個新 array
                     //for segCtrl use
-                    let allCategory = data.records.map {$0.fields.type}
+                    let allCategory = drinkData.records.map {$0.fields.type}
                     //Set去重複
                     let allCategorySet = Set(allCategory)
                     //Set -> Array + sorted排序

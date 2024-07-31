@@ -30,6 +30,10 @@
 		497064EF2C23FB8B0051B7A7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */; };
 		497064F12C26A9460051B7A7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064F02C26A9450051B7A7 /* ProfileViewController.swift */; };
 		497064F32C26CE140051B7A7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497064F22C26CE140051B7A7 /* MainTabBarController.swift */; };
+		499EAB8D2C577D2500DF189D /* DrinkOrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499EAB8C2C577D2500DF189D /* DrinkOrderViewModel.swift */; };
+		499EAB8F2C5783D700DF189D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499EAB8E2C5783D700DF189D /* User.swift */; };
+		499EAB912C58E1E600DF189D /* GetUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499EAB902C58E1E600DF189D /* GetUrl.swift */; };
+		499EAB932C58EA8C00DF189D /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499EAB922C58EA8C00DF189D /* CartViewModel.swift */; };
 		49D0536C2C538C6B00E1F5F5 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */; };
 		49D0536E2C53D27A00E1F5F5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */; };
 		49D053702C53D6D500E1F5F5 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536F2C53D6D500E1F5F5 /* Error.swift */; };
@@ -69,6 +73,10 @@
 		497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		497064F02C26A9450051B7A7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		497064F22C26CE140051B7A7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		499EAB8C2C577D2500DF189D /* DrinkOrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkOrderViewModel.swift; sourceTree = "<group>"; };
+		499EAB8E2C5783D700DF189D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		499EAB902C58E1E600DF189D /* GetUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUrl.swift; sourceTree = "<group>"; };
+		499EAB922C58EA8C00DF189D /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		49D0536F2C53D6D500E1F5F5 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -141,15 +149,14 @@
 		49D053672C533E0D00E1F5F5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				490F64022C36557800520D0F /* CartViewController.swift */,
 				497064EE2C23FB8B0051B7A7 /* RegisterViewController.swift */,
 				497064D72C231E340051B7A7 /* LoginViewController.swift */,
 				497064EC2C23CF830051B7A7 /* MenuViewController.swift */,
+				490F63F82C3308D700520D0F /* DrinkOrderViewController.swift */,
 				497064D32C231E340051B7A7 /* AppDelegate.swift */,
 				497064D52C231E340051B7A7 /* SceneDelegate.swift */,
-				497064E92C23C81C0051B7A7 /* DatabaseManager.swift */,
 				490F63F62C32590200520D0F /* FetchDataManager.swift */,
-				490F63F82C3308D700520D0F /* DrinkOrderViewController.swift */,
-				490F64022C36557800520D0F /* CartViewController.swift */,
 				497064F02C26A9450051B7A7 /* ProfileViewController.swift */,
 				497064F22C26CE140051B7A7 /* MainTabBarController.swift */,
 			);
@@ -163,6 +170,8 @@
 				490F64042C368C0800520D0F /* Orders.swift */,
 				49D0536F2C53D6D500E1F5F5 /* Error.swift */,
 				490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */,
+				499EAB8E2C5783D700DF189D /* User.swift */,
+				499EAB902C58E1E600DF189D /* GetUrl.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -188,6 +197,8 @@
 				49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */,
 				49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */,
 				49D053712C54DAE600E1F5F5 /* RegisterViewModel.swift */,
+				499EAB8C2C577D2500DF189D /* DrinkOrderViewModel.swift */,
+				499EAB922C58EA8C00DF189D /* CartViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -195,6 +206,7 @@
 		49D053732C54F37F00E1F5F5 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				497064E92C23C81C0051B7A7 /* DatabaseManager.swift */,
 				49D053742C54F39C00E1F5F5 /* AuthManager.swift */,
 			);
 			path = Service;
@@ -372,17 +384,21 @@
 				49D053702C53D6D500E1F5F5 /* Error.swift in Sources */,
 				49D0536E2C53D27A00E1F5F5 /* LoginViewModel.swift in Sources */,
 				497064ED2C23CF830051B7A7 /* MenuViewController.swift in Sources */,
+				499EAB8F2C5783D700DF189D /* User.swift in Sources */,
 				490F63E82C2F3AC700520D0F /* MenuTableViewCell.swift in Sources */,
 				490F63E42C2E83A300520D0F /* NumberpadReturn.swift in Sources */,
 				490F63E62C2EC23000520D0F /* Drinks.swift in Sources */,
 				490F64052C368C0800520D0F /* Orders.swift in Sources */,
 				490F63E22C2A971A00520D0F /* GoogleServiceManager.swift in Sources */,
+				499EAB932C58EA8C00DF189D /* CartViewModel.swift in Sources */,
+				499EAB8D2C577D2500DF189D /* DrinkOrderViewModel.swift in Sources */,
 				497064F32C26CE140051B7A7 /* MainTabBarController.swift in Sources */,
 				497064D82C231E340051B7A7 /* LoginViewController.swift in Sources */,
 				490F63F92C3308D700520D0F /* DrinkOrderViewController.swift in Sources */,
 				497064EF2C23FB8B0051B7A7 /* RegisterViewController.swift in Sources */,
 				497064F12C26A9460051B7A7 /* ProfileViewController.swift in Sources */,
 				490F64072C37B32F00520D0F /* CartTableViewCell.swift in Sources */,
+				499EAB912C58E1E600DF189D /* GetUrl.swift in Sources */,
 				49F2B6D12C4A5ED10028BD88 /* APIKey.swift in Sources */,
 				49D0536C2C538C6B00E1F5F5 /* MenuViewModel.swift in Sources */,
 				490F63FD2C33F81700520D0F /* IceSugarTableViewCell.swift in Sources */,
