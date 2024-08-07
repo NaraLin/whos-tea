@@ -1,8 +1,8 @@
 //
-//  NumberpadReturn.swift
+//  Extension.swift
 //  whos tea
 //
-//  Created by 林靖芳 on 2024/6/28.
+//  Created by 林靖芳 on 2024/8/1.
 //
 
 import Foundation
@@ -21,10 +21,19 @@ extension UITextField {
     }
     
     @objc func donekey(){
-        
         self.resignFirstResponder()
-        
     }
 }
 
-
+//擴展view畫圓角
+extension UIView {
+    
+    func roundCorners(coners: UIRectCorner, radius: CGFloat){
+        
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: coners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+        
+    }
+}

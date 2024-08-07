@@ -156,6 +156,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func setupBindings(){
+        
+        
         viewModel.onOrderUpdated = { [weak self] in
             DispatchQueue.main.async{
                 self?.tableView.reloadData()
@@ -250,15 +252,4 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
 }
 
-//擴展view畫圓角
-extension UIView {
-    
-    func roundCorners(coners: UIRectCorner, radius: CGFloat){
-        
-        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: coners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        self.layer.mask = mask
-        
-    }
-}
+

@@ -29,6 +29,7 @@ class DrinkOrderViewModel {
     
     private var totalPrice:Int = 0
     
+    
     var selectQty: Int = 1 {
         didSet{
             //數量改變時，更新總金額
@@ -45,7 +46,7 @@ class DrinkOrderViewModel {
         getCurrentUser()
     }
 
-    //UIStepper.value是Double
+    //UIStepper.value
     func updateQty(value: Int){
         selectQty = value
     }
@@ -105,7 +106,12 @@ class DrinkOrderViewModel {
             return
         }
         
-        self.uploadOrder = Orders(records: [OrderRecords(fields: OrderFields(name: currentUser, drink: addCartDrink, sugar: sugarSelected, ice: iceSelected, price: priceTotal, qty: qtySelected))])
+        self.uploadOrder = Orders(records: [OrderRecords(fields: OrderFields(name: currentUser, 
+                                                                             drink: addCartDrink,
+                                                                             sugar: sugarSelected,
+                                                                             ice: iceSelected,
+                                                                             price: priceTotal,
+                                                                             qty: qtySelected))])
         completion(.success(()))
     }
     

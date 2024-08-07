@@ -102,7 +102,6 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         tableView.separatorStyle = .none
         
         iceSugarCell.radioButton.isSelected = viewModel.isOptionSelected(section: indexPath.section, row: indexPath.row)
-        //iceSugarCell.radioButton.isSelected = viewModel.selectOption[indexPath.section] == indexPath.row
         
         switch indexPath.section {
             case 0:
@@ -128,14 +127,23 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    private var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableview = UITableView()
         tableview.translatesAutoresizingMaskIntoConstraints = false
+        
+        //registercell
+        tableview.register(IceSugarTableViewCell.self, forCellReuseIdentifier: "iceAndSugarCell")
+        tableview.register(OrderDrinkTableViewCell.self, forCellReuseIdentifier: "drinkCell")
+        
+        //delegate
+        tableview.dataSource = self
+        tableview.delegate = self
+        
         return tableview
     }()
     
     
-    private var qtyStackView: UIStackView = {
+    private lazy var qtyStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(named: "mainColor")
@@ -147,7 +155,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         
     }()
     
-    private var priceStackView: UIStackView = {
+    private lazy var priceStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(named: "mainColor")
@@ -159,7 +167,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         
     }()
     
-    private var cartLeftStackView: UIStackView = {
+    private lazy var cartLeftStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(named: "mainColor")
@@ -171,7 +179,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         
     }()
     
-    private var cartStackView: UIStackView = {
+    private lazy var cartStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(named: "mainColor")
@@ -184,7 +192,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         
     }()
     
-    private var priceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.text = "總金額 ：＄"
         label.font = UIFont(name: "NatsuzemiMaruGothic-Black", size: 20)
@@ -203,7 +211,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         return label
     }()
     
-    private var QTYLabel: UILabel = {
+    private lazy var QTYLabel: UILabel = {
         let label = UILabel()
         label.text = "數量 ："
         label.font = UIFont(name: "NatsuzemiMaruGothic-Black", size: 20)
@@ -212,7 +220,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         return label
     }()
     
-   private var selectQTYLabel: UILabel = {
+   private lazy var selectQTYLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
         label.font = UIFont(name: "GillSans-SemiBold", size: 24)
@@ -221,7 +229,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         return label
     }()
     
-    private var QTYStepper: UIStepper = {
+    private lazy var QTYStepper: UIStepper = {
         let stepper = UIStepper()
         stepper.stepValue = 1
         stepper.minimumValue = 1
@@ -229,15 +237,17 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         stepper.backgroundColor = UIColor.white
         stepper.layer.cornerRadius = 12
         stepper.clipsToBounds = true
+        stepper.addTarget(self, action: #selector(stepperValueChange), for: .valueChanged)
         return stepper
         
     }()
     
-    private var addToCartButton: UIButton = {
+    private lazy var addToCartButton: UIButton = {
         let button = UIButton()
         // button.setTitle("加到購物車", for: .normal)
         let normalAttributedString: [NSAttributedString.Key : Any] = [.font : UIFont(name: "NatsuzemiMaruGothic-Black", size: 20)!, .foregroundColor : UIColor.white]
         button.setAttributedTitle(NSAttributedString(string: "加到購物車", attributes: normalAttributedString), for: .normal)
+        button.addTarget(self, action: #selector(addToCart), for: .touchUpInside)
         return button
     }()
     
@@ -245,14 +255,6 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //registercell
-        tableView.register(IceSugarTableViewCell.self, forCellReuseIdentifier: "iceAndSugarCell")
-        tableView.register(OrderDrinkTableViewCell.self, forCellReuseIdentifier: "drinkCell")
-        
-        
-        //delegate
-        tableView.dataSource = self
-        tableView.delegate = self
         
         //setup UI
         setupUI()
@@ -262,8 +264,8 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
         viewModel.getCurrentUser()
         
         //addTarget
-        QTYStepper.addTarget(self, action: #selector(stepperValueChange), for: .valueChanged)
-        addToCartButton.addTarget(self, action: #selector(addToCart), for: .touchUpInside)
+        
+        
         
         setupBinding()
         viewModel.updatePrice()
@@ -318,6 +320,7 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
     
     private func setupBinding() {
         
+        
         //定義viewModel closure
         viewModel.onQtyUpdated = { [weak self] qty in
             self?.selectQTYLabel.text = "\(qty)"
@@ -337,22 +340,24 @@ class DrinkOrderViewController: UIViewController, UITableViewDataSource, UITable
     
     @objc func addToCart() {
         
-        viewModel.addToCart { result in
+        viewModel.addToCart { [weak self] result in
+            guard let strongSelf = self else { return }
+            
             DispatchQueue.main.async {
                 switch result {
                     case .success:
-                        self.viewModel.uploadCartOrder { result in
+                        strongSelf.viewModel.uploadCartOrder { result in
                             DispatchQueue.main.async {
                                 switch result {
                                     case .success:
-                                        self.showAlert(title: "已成功加入購物車", message: "")
+                                        strongSelf.showAlert(title: "已成功加入購物車", message: "")
                                     case .failure(let error):
-                                        self.showAlert(title: "Error", message: error.localizedDescription)
+                                        strongSelf.showAlert(title: "Error", message: error.localizedDescription)
                                 }
                             }
                         }
                     case .failure(let error):
-                        self.showAlert(title: "\(error.message)", message: "")
+                        strongSelf.showAlert(title: "\(error.message)", message: "")
                 }
             }
             

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		490F63E02C2A73F100520D0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */; };
 		490F63E22C2A971A00520D0F /* GoogleServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */; };
-		490F63E42C2E83A300520D0F /* NumberpadReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63E32C2E83A200520D0F /* NumberpadReturn.swift */; };
 		490F63E62C2EC23000520D0F /* Drinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63E52C2EC23000520D0F /* Drinks.swift */; };
 		490F63E82C2F3AC700520D0F /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63E72C2F3AC600520D0F /* MenuTableViewCell.swift */; };
 		490F63F72C32590200520D0F /* FetchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490F63F62C32590200520D0F /* FetchDataManager.swift */; };
@@ -34,6 +33,8 @@
 		499EAB8F2C5783D700DF189D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499EAB8E2C5783D700DF189D /* User.swift */; };
 		499EAB912C58E1E600DF189D /* GetUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499EAB902C58E1E600DF189D /* GetUrl.swift */; };
 		499EAB932C58EA8C00DF189D /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499EAB922C58EA8C00DF189D /* CartViewModel.swift */; };
+		49C1F6442C5A66F500DF34E8 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1F6432C5A66F500DF34E8 /* Observable.swift */; };
+		49C1F6462C5B66B700DF34E8 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C1F6452C5B66B700DF34E8 /* Extension.swift */; };
 		49D0536C2C538C6B00E1F5F5 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */; };
 		49D0536E2C53D27A00E1F5F5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */; };
 		49D053702C53D6D500E1F5F5 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D0536F2C53D6D500E1F5F5 /* Error.swift */; };
@@ -50,7 +51,6 @@
 /* Begin PBXFileReference section */
 		490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleServiceManager.swift; sourceTree = "<group>"; };
-		490F63E32C2E83A200520D0F /* NumberpadReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberpadReturn.swift; sourceTree = "<group>"; };
 		490F63E52C2EC23000520D0F /* Drinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drinks.swift; sourceTree = "<group>"; };
 		490F63E72C2F3AC600520D0F /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		490F63F62C32590200520D0F /* FetchDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDataManager.swift; sourceTree = "<group>"; };
@@ -77,6 +77,8 @@
 		499EAB8E2C5783D700DF189D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		499EAB902C58E1E600DF189D /* GetUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUrl.swift; sourceTree = "<group>"; };
 		499EAB922C58EA8C00DF189D /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
+		49C1F6432C5A66F500DF34E8 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		49C1F6452C5B66B700DF34E8 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		49D0536F2C53D6D500E1F5F5 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -134,16 +136,33 @@
 		497064D22C231E340051B7A7 /* whos tea */ = {
 			isa = PBXGroup;
 			children = (
+				49A96B472C631E8200E5F19E /* APPDelegate */,
+				49A96B462C631E0500E5F19E /* Resource */,
 				49D053732C54F37F00E1F5F5 /* Service */,
 				49D0536A2C538C2900E1F5F5 /* ViewModel */,
 				49D053692C533E2400E1F5F5 /* View */,
 				49D053682C533E1A00E1F5F5 /* Model */,
 				49D053672C533E0D00E1F5F5 /* Controller */,
-				490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */,
-				49F2B6C72C476E160028BD88 /* Font */,
-				497064E12C231E390051B7A7 /* Info.plist */,
 			);
 			path = "whos tea";
+			sourceTree = "<group>";
+		};
+		49A96B462C631E0500E5F19E /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				497064E12C231E390051B7A7 /* Info.plist */,
+				49F2B6C72C476E160028BD88 /* Font */,
+				490F63DF2C2A73F100520D0F /* GoogleService-Info.plist */,
+				497064DC2C231E390051B7A7 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		49A96B472C631E8200E5F19E /* APPDelegate */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = APPDelegate;
 			sourceTree = "<group>";
 		};
 		49D053672C533E0D00E1F5F5 /* Controller */ = {
@@ -156,9 +175,6 @@
 				490F63F82C3308D700520D0F /* DrinkOrderViewController.swift */,
 				497064D32C231E340051B7A7 /* AppDelegate.swift */,
 				497064D52C231E340051B7A7 /* SceneDelegate.swift */,
-				490F63F62C32590200520D0F /* FetchDataManager.swift */,
-				497064F02C26A9450051B7A7 /* ProfileViewController.swift */,
-				497064F22C26CE140051B7A7 /* MainTabBarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -169,7 +185,6 @@
 				490F63E52C2EC23000520D0F /* Drinks.swift */,
 				490F64042C368C0800520D0F /* Orders.swift */,
 				49D0536F2C53D6D500E1F5F5 /* Error.swift */,
-				490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */,
 				499EAB8E2C5783D700DF189D /* User.swift */,
 				499EAB902C58E1E600DF189D /* GetUrl.swift */,
 			);
@@ -179,13 +194,14 @@
 		49D053692C533E2400E1F5F5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				497064F02C26A9450051B7A7 /* ProfileViewController.swift */,
 				490F63E72C2F3AC600520D0F /* MenuTableViewCell.swift */,
 				490F63FC2C33F81700520D0F /* IceSugarTableViewCell.swift */,
 				490F63FA2C33AFB800520D0F /* OrderDrinkTableViewCell.swift */,
 				490F64062C37B32E00520D0F /* CartTableViewCell.swift */,
-				490F63E32C2E83A200520D0F /* NumberpadReturn.swift */,
+				497064F22C26CE140051B7A7 /* MainTabBarController.swift */,
+				49C1F6452C5B66B700DF34E8 /* Extension.swift */,
 				497064D92C231E340051B7A7 /* Main.storyboard */,
-				497064DC2C231E390051B7A7 /* Assets.xcassets */,
 				497064DE2C231E390051B7A7 /* LaunchScreen.storyboard */,
 			);
 			path = View;
@@ -194,6 +210,7 @@
 		49D0536A2C538C2900E1F5F5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				49C1F6432C5A66F500DF34E8 /* Observable.swift */,
 				49D0536B2C538C6B00E1F5F5 /* MenuViewModel.swift */,
 				49D0536D2C53D27A00E1F5F5 /* LoginViewModel.swift */,
 				49D053712C54DAE600E1F5F5 /* RegisterViewModel.swift */,
@@ -206,8 +223,10 @@
 		49D053732C54F37F00E1F5F5 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				490F63E12C2A971A00520D0F /* GoogleServiceManager.swift */,
 				497064E92C23C81C0051B7A7 /* DatabaseManager.swift */,
 				49D053742C54F39C00E1F5F5 /* AuthManager.swift */,
+				490F63F62C32590200520D0F /* FetchDataManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -386,7 +405,7 @@
 				497064ED2C23CF830051B7A7 /* MenuViewController.swift in Sources */,
 				499EAB8F2C5783D700DF189D /* User.swift in Sources */,
 				490F63E82C2F3AC700520D0F /* MenuTableViewCell.swift in Sources */,
-				490F63E42C2E83A300520D0F /* NumberpadReturn.swift in Sources */,
+				49C1F6462C5B66B700DF34E8 /* Extension.swift in Sources */,
 				490F63E62C2EC23000520D0F /* Drinks.swift in Sources */,
 				490F64052C368C0800520D0F /* Orders.swift in Sources */,
 				490F63E22C2A971A00520D0F /* GoogleServiceManager.swift in Sources */,
@@ -395,6 +414,7 @@
 				497064F32C26CE140051B7A7 /* MainTabBarController.swift in Sources */,
 				497064D82C231E340051B7A7 /* LoginViewController.swift in Sources */,
 				490F63F92C3308D700520D0F /* DrinkOrderViewController.swift in Sources */,
+				49C1F6442C5A66F500DF34E8 /* Observable.swift in Sources */,
 				497064EF2C23FB8B0051B7A7 /* RegisterViewController.swift in Sources */,
 				497064F12C26A9460051B7A7 /* ProfileViewController.swift in Sources */,
 				490F64072C37B32F00520D0F /* CartTableViewCell.swift in Sources */,
@@ -560,6 +580,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6H9287UZN4;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
