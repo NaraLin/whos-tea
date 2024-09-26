@@ -15,7 +15,8 @@ class MenuViewModel {
     var categories = [String]()
     var filterDrinks = [Records]()
     var handle: AuthStateDidChangeListenerHandle?
-   
+    var searchDrink = [Records]()
+    
     //NSCache類似dictionary，有key&Value，型別都必須是物件，只能傳入 class 定義的型別(所以不能URL，只能NSURL)
     //NSCache 比較不會造成記憶體的問題，因為當系統記憶體不夠時，它會自動將東西從 cache 裡移除，也可以限制它可以儲存的東西數量(設定它的 countLimit)
     let imageCache = NSCache<NSURL, UIImage>()

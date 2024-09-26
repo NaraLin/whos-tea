@@ -9,8 +9,23 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
+//searchController
+extension MenuViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        segctrlScrollView.isHidden = searchController.isActive
+        NSLayoutConstraint.activate([tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)])
+        guard let searchText = searchController.searchBar.text else { return }
+        viewModel.searchDrink = viewModel.drinks.filter { (drink) -> Bool in
+            let isMatch = drink.fields.name.localizedCaseInsensitiveContains(searchText)
+            return isMatch
+        }
+        tableView.reloadData()
+    }
+    
+}
+
 class MenuViewController: UIViewController {
- 
+
     private let viewModel = MenuViewModel()
     
     
@@ -42,10 +57,18 @@ class MenuViewController: UIViewController {
         return scrollView
     }()
     
+    private var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "今天想來點..."
+        searchController.searchBar.tintColor = .black
+        return searchController
+    }()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+
         view.backgroundColor = UIColor(named: "mainColor")
         tableView.rowHeight = UITableView.automaticDimension
         
@@ -76,6 +99,7 @@ class MenuViewController: UIViewController {
         //subview
         view.addSubview(tableView)
         view.addSubview(segctrlScrollView)
+     
         segctrlScrollView.addSubview(drinkSegCtrl)
    
         
@@ -89,6 +113,11 @@ class MenuViewController: UIViewController {
         //addTarget
         drinkSegCtrl.addTarget(self, action: #selector(segmentChange), for: .valueChanged)
        
+        
+        //SearchController
+        tableView.tableHeaderView = searchController.searchBar
+        //navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
     }
     
    
@@ -138,49 +167,19 @@ class MenuViewController: UIViewController {
         
     }
     
-    
-    
-    
-    
-    
-    
-//    private func validationAuth(){
-//
-//        if currentUser == nil {
-//
-//            let vc = LoginViewController()
-//            let nav = UINavigationController(rootViewController: vc)
-//            nav.modalPresentationStyle = .fullScreen
-//            present(nav, animated: true)
-//
-//        }
-//
-//    }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.filterDrinks.count
+        return searchController.isActive ? viewModel.searchDrink.count : viewModel.filterDrinks.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let drink = viewModel.filterDrinks[indexPath.row]
+        let drink = searchController.isActive ? viewModel.searchDrink[indexPath.row] : viewModel.filterDrinks[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath) as! MenuTableViewCell
         let image = cell.drinkImageView.image
         let vm = DrinkOrderViewModel(drinks: drink, image: image)
@@ -191,9 +190,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "menu cell", for: indexPath) as! MenuTableViewCell
-        let drink = viewModel.filterDrinks[indexPath.row]
+        let drink = searchController.isActive ? viewModel.searchDrink[indexPath.row] : viewModel.filterDrinks[indexPath.row]
+        
         cell.drink = drink
-        cell.drinkNameLabel.text = "----    " + viewModel.filterDrinks[indexPath.row].fields.name + "    ----"
+        cell.drinkNameLabel.text = "----    " + drink.fields.name + "    ----"
         cell.drinkImageView.image = nil
         
         //fetchImage
@@ -211,11 +211,6 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 // currentIndexPath == indexPath { cell.drinkImageView.image = image }
             }
         }
-        
-        
-        
         return cell
-        
-        
     }
 }
